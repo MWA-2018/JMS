@@ -1,16 +1,6 @@
-# JMS
-Job Management System for MWA project
+# Meeting Records
 
-## MIT LICENSE
-
-Technologies used:
-1. Express JS (For the routing purpose)
-2. Node JS (At the Backend)
-3. Mongo DB (using Mongoose)
-4. Angular (At the front end)
-5. Git Repository 
-
-
+## 04/21/2018--15:00 PM
 ### Project Description
 It'll be Job-search Management System, which can be used by applicant or recruiter. It's divided into four modules:
 - Register: users can register as applicant or recruiter;
