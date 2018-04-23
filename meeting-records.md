@@ -12,3 +12,11 @@ It'll be Job-search Management System, which can be used by applicant or recruit
 - David: register module
 - Jeewan, Rupendra: publish and apply module
 - Jiecheng: search module
+
+
+## 04/23/2018--10:00 AM
+We discussed and determined the user interface, then divide to individuals.
+- David: index, register, login
+- Jeewan: recruiter page, recruiter profile modification
+- Rupendra: applicant page, applicant profile modification
+- Jiecheng: search page
