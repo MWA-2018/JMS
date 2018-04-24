@@ -1,10 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-
-import {MatPaginator, MatTableModule, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'jmsapp-search',

@@ -23,3 +23,33 @@
   <div class="row col-sm-12 job_detail" id="job_{{ job.id }}">Job Detail {{ job.id }}</div>
 
 </div>
+
+<!-- <accordion *ngFor="let job of jobs">
+  <accordion-group>
+    <div accordion-heading class="clearfix">
+      {{ job.title }}
+    </div>
+    <div accordion-heading class="clearfix">
+      {{ job.company }}
+    </div>
+    <div accordion-heading class="clearfix">
+      {{ job.tags }}
+    </div>
+    <div accordion-heading class="clearfix apply_job">
+      <button class="btn btn-primary" (click)="applyJob($event)" id="job_{{ job.id }}">
+        Apply
+      </button>
+    </div>
+
+    <div class="container row col-sm-10 offset-sm-1 job_detail align-self-center card card-body " id="job_{{ job.id }}">
+      <h3 class="p_title">Job Description for job_{{ job.id }}</h3>
+      <div class="p_content">{{ job.descipiton }}</div>
+      <div class="apply_job justify-content-center">
+        <button class="btn btn-primary" (click)="applyJob($event)" id="job_{{ job.id }}">
+          Apply for this position
+        </button>
+      </div>
+    </div>
+  </accordion-group>
+</accordion> -->
+

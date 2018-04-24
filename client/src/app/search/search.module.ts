@@ -4,11 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { MatTableModule } from '@angular/material/table';
-import { CdkTableModule } from '@angular/cdk/table';
 import { SearchComponent } from './search.component';
-
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 @NgModule({
   imports: [
@@ -17,8 +14,7 @@ import { SearchComponent } from './search.component';
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    MatTableModule,
-    CdkTableModule
+    AccordionModule.forRoot()
   ],
   declarations: [SearchComponent],
   exports: [SearchComponent]
