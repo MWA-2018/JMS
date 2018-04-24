@@ -18,11 +18,9 @@ export class SearchComponent implements OnInit {
   expandJob(event) {
     // console.log(this.jobsTr);
     let job_id = event.currentTarget.id;
-    let job_detail_element = event.srcElement.parentElement.nextElementSibling.nextElementSibling;
-    if (job_detail_element.style.display == 'block')
-      job_detail_element.style.display = 'none';
-    else
-      job_detail_element.style.display = 'block';
+    let job_detail_element = event.srcElement.parentElement.nextElementSibling;
+    job_detail_element.style.display = job_detail_element.style.display == 'block' ? 'none' : 'block';
+
     console.log(job_detail_element);
     console.log(job_detail_element.style.display);
   }
