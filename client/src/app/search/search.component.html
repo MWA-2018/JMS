@@ -1,0 +1,55 @@
+<div class="jobs_search_result" *ngFor="let job of jobs">
+  
+
+    <div class="job_info col-sm-10" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      <div class="expand col-sm-1" (click)="expandJob($event)">expand</div>
+      <div class="job_title col-sm-3">
+        {{ job.title }}
+      </div>
+      <div class="job_company col-sm-3">
+        {{ job.company }}
+      </div>
+      <div class="job_tags col-sm-3">
+        {{ job.tags }}
+      </div>
+    </div>
+    <div class="apply_job col-sm-2">
+      <button class="btn btn-link" (click)="applyJob($event)" id="job_{{ job.id }}">
+        Apply
+      </button>
+    </div>
+  <!-- </div> -->
+
+  <div class="row col-sm-12 job_detail" id="job_{{ job.id }}">Job Detail {{ job.id }}</div>
+
+</div>
+
+<!-- <accordion *ngFor="let job of jobs">
+  <accordion-group>
+    <div accordion-heading class="clearfix">
+      {{ job.title }}
+    </div>
+    <div accordion-heading class="clearfix">
+      {{ job.company }}
+    </div>
+    <div accordion-heading class="clearfix">
+      {{ job.tags }}
+    </div>
+    <div accordion-heading class="clearfix apply_job">
+      <button class="btn btn-primary" (click)="applyJob($event)" id="job_{{ job.id }}">
+        Apply
+      </button>
+    </div>
+
+    <div class="container row col-sm-10 offset-sm-1 job_detail align-self-center card card-body " id="job_{{ job.id }}">
+      <h3 class="p_title">Job Description for job_{{ job.id }}</h3>
+      <div class="p_content">{{ job.descipiton }}</div>
+      <div class="apply_job justify-content-center">
+        <button class="btn btn-primary" (click)="applyJob($event)" id="job_{{ job.id }}">
+          Apply for this position
+        </button>
+      </div>
+    </div>
+  </accordion-group>
+</accordion> -->
+
