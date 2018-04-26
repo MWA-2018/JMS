@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'jmsapp-position',
   templateUrl: './position.component.html',
-  styleUrls: ['./position.component.css']
+  styleUrls: ['./position.component.scss']
 })
 export class PositionComponent {
   // @ViewChild('positionItems', { read: ViewContainerRef }) positionItemRef: ViewContainerRef;

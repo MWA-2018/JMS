@@ -88,7 +88,8 @@ export class SearchBarComponent implements OnInit {
   }
 
   onSearch(event) {
-    if (this.asyncSelected) {
+    console.log(this.asyncSelected);
+    if (this.asyncSelected !== null) {
       console.log("searching.....");
       this._dataService.searchJobPosResault('title=' + this.asyncSelected);
     } else {
