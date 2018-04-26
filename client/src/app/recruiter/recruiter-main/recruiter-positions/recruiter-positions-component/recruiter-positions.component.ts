@@ -26,7 +26,11 @@ export class RecruiterPositionsComponent implements OnInit {
     this._dataService.getRecruiterInfo();
     this._dataService.recruiter.subscribe(
       (data:Recruiter) => {
-        this.jobPositions = data.positions;
+        if(data){
+          this.jobPositions = data.positions;
+        }else{
+          this.jobPositions=[];
+        }
         return true;
       },
       console.error,

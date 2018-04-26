@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../../core/services/data.service';
 import {AuthService} from  '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jmsapp-update-recruiter',
@@ -18,7 +19,8 @@ export class UpdateRecruiterComponent implements OnInit {
   fullImagePath:string;
 
   selectedFile:File = null;
-  constructor(private _dataService: DataService,private _authService: AuthService) { 
+  constructor(private _dataService: DataService,private _authService: AuthService,
+  private router: Router) { 
     this.fullImagePath = "/assets/images/profile.png";
   }
   
@@ -46,6 +48,7 @@ export class UpdateRecruiterComponent implements OnInit {
   
   getImage(event){
     console.log(event);
+    
     // this.selectedFile = event.target.files[0];
   }
 }
