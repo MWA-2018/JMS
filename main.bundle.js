@@ -303,20 +303,21 @@ var ApplicantComponent = /** @class */ (function () {
         this.cdRef = cdRef;
     }
     ApplicantComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.applicant = new __WEBPACK_IMPORTED_MODULE_0__shared_models_applicant__["a" /* Applicant */]();
         this.positions = [];
         console.log('test');
         this._dataService.setSearchBarMini(true);
-        // this._dataService.appliedJobPos.subscribe((res: JobPosition[]) => {
-        //   this.positions = res;
-        // });
+        this._dataService.appliedJobPos.subscribe(function (res) {
+            _this.positions = res;
+        });
     };
     ApplicantComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         this._dataService.applicant.subscribe(function (res) {
             console.log(res);
             _this.applicant = res.applicant;
-            _this.positions = res.appliedpost;
+            // this.positions = res.appliedpost;
             console.log(_this.applicant);
             _this.cdRef.detectChanges();
         });
@@ -1143,12 +1144,18 @@ var DataService = /** @class */ (function () {
     };
     DataService.prototype.getAppliedJobPos = function (pos_id) {
         var _this = this;
+        console.log(pos_id);
         this._http.get(url + "/jobPosition/search?_id=" + pos_id)
             .subscribe(function (response) {
-            console.log(response);
             _this.dataRepo.appliedJobPos = response;
             _this._appliedJobPos.next(Object.assign({}, _this.dataRepo).appliedJobPos);
         });
+        // this.dataRepo.appliedJobPos.push({ "_id": ObjectId("5adf89d05e4ecb3c4ca5fc01"),
+        //   "postDate": ISODate("2018-04-24T19:47:28.277Z"), "company": "Google",
+        //   "applicant_ids": [], "title": "MEAN Developer",
+        //   "description": "Java into the world again",
+        //   "tags": "abc, def", "status": "Open", "__v": 0 });
+        // this._appliedJobPos.next(Object.assign({}, this.dataRepo).appliedJobPos);
     };
     DataService.prototype.isAuthenticated = function () {
         return !!this.token;
@@ -2219,10 +2226,9 @@ var SearchComponent = /** @class */ (function () {
     };
     SearchComponent.prototype.applyJob = function (event) {
         var srcElement = event.srcElement;
-        var pos_id = srcElement.attributes.id;
-        console.log(pos_id);
-        var resault = this._dataService.updateApplicantJobPos(pos_id);
-        console.log(resault);
+        var pos_id = srcElement.attributes.id.value;
+        // let resault = this._dataService.updateApplicantJobPos(pos_id);
+        // console.log(resault);
         this._dataService.getAppliedJobPos(pos_id);
         this._router.navigate(['jms/applicant']);
     };
