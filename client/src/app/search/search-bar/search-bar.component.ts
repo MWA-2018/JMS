@@ -33,7 +33,7 @@ export class SearchBarComponent implements OnInit {
         this.suggestions.push('no suggestion right now!');
       }
     }, console.error, () => console.log("Initial the search suggestion sccessed! "));
-    if (this._dataService.isAuthenticated) {
+    if (this._dataService.isAuthenticated()) {
       this._dataService.setSearchBarMini(true);
     } else {
       this._dataService.setSearchBarMini(false);      
