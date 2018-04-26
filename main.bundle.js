@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<navigation></navigation>\n\n<!-- <jmsapp-recruiter-main></jmsapp-recruiter-main> -->\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<!-- <jmsapp-update-recruiter></jmsapp-update-recruiter> -->\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<!-- <jmsapp-update-recruiter></jmsapp-update-recruiter> -->\n\n<!-- <jmsapp-applicant></jmsapp-applicant> -->\n<!-- <jmsapp-search-bar></jmsapp-search-bar> -->\n\n<router-outlet></router-outlet>\n\n"
+module.exports = "<navigation></navigation>\n\n<!-- <jmsapp-recruiter-main></jmsapp-recruiter-main> -->\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<jmsapp-update-recruiter></jmsapp-update-recruiter>\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<!-- <jmsapp-update-recruiter></jmsapp-update-recruiter> -->\n\n<!-- <jmsapp-applicant></jmsapp-applicant> -->\n<!-- <jmsapp-search-bar></jmsapp-search-bar> -->\n\n<router-outlet></router-outlet>\n\n"
 
 /***/ }),
 
@@ -813,7 +813,7 @@ module.exports = ""
 /***/ "./src/app/core/navigation/auth/auth.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"isAuthenticated\">\n    <button type=\"button\" class=\"btn\" (click)=\"goProfile()\">Profile</button>\n    /\n    <button type=\"button\" class=\"btn\" (click)=\"logout()\">Logout</button>\n</div>\n\n<div *ngIf=\"!isAuthenticated\">\n    <button type=\"button\" class=\"btn\" (click)=\"registerModal(registerMod)\">Register</button>\n    /\n    <button type=\"button\" class=\"btn\" (click)=\"loginModal(loginMod)\">Login</button>\n</div>\n\n<ng-template #registerMod>\n    <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Register</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"modalRef.hide()\">\n        <span aria-hidden=\"true\">&times;</span>\n        </button>\n    </div>\n    <div class=\"modal-body\">\n        <form novalidate (ngSubmit)=\"submitRegister(registerForm)\" #registerForm=\"ngForm\" autocomplete=\"off\">\n\n            <div class=\"form-group\">\n                <label>Full Name</label>\n                <input class=\"form-control\" type=\"text\" name=\"fullname\" #fullmame=\"ngModel\" [(ngModel)]=\"model.fullname\" required>\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"fullmame.errors && (fullmame.dirty || fullmame.touched)\">\n                   <p *ngIf=\"fullmame.errors.required\">Full Name is required</p>\n               </div>\n            </div>\n\n            <div class=\"form-group\">\n\n                <label for=\"applicant\">Applicant</label>\n                <input type=\"radio\" id=\"applicant\" name=\"role\" #role=\"ngModel\" [(ngModel)]=\"model.role\" value=\"applicant\">\n                <br>\n                <label for=\"recruiter\">Recruiter</label>\n                <input type=\"radio\" id=\"recruiter\" name=\"role\" #role=\"ngModel\" [(ngModel)]=\"model.role\" value=\"recruiter\">\n            </div>\n\n            <div class=\"form-group\"\n                [ngClass]=\"{\n                    'has-danger': email.invalid && (email.dirty || email.touched),\n                    'has-success': email.valid && (email.dirty || email.touched)\n                }\">\n               <label>Email</label>\n               <input type=\"email\"\n                      class=\"form-control\"\n                      autocomplete=\"off\"\n                      name=\"email\"\n                      [(ngModel)]=\"model.email\"\n                      required\n                      pattern=\"[^ @]*@[^ @]*\"\n                      #email=\"ngModel\">\n               <div class=\"form-control-feedback\"\n                    *ngIf=\"email.errors && (email.dirty || email.touched)\">\n                   <p *ngIf=\"email.errors.required\">Email is required</p>\n                   <p *ngIf=\"email.errors.pattern\">Email must contain at least the @ character</p>\n               </div>\n           </div>\n\n           <div class=\"form-group\"\n                [ngClass]=\"{\n                    'has-danger': password.invalid && (password.dirty || password.touched),\n                    'has-success': password.valid && (password.dirty || password.touched)\n                }\">\n                <label>Password</label>\n                <input type=\"password\"\n                        class=\"form-control\"\n                        autocomplete=\"off\"\n                        name=\"password\"\n                        [(ngModel)]=\"model.password\"\n                        required\n                        minlength=\"8\"\n                        #password=\"ngModel\">\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"password.errors && (password.dirty || password.touched)\">\n                    <p *ngIf=\"password.errors.required\">Password is required</p>\n                    <p *ngIf=\"password.errors.minlength\">Password must be at least 8 characters long</p>\n                </div>\n            </div>\n\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"registerForm.invalid\">Register</button>\n\n        </form>\n    </div>\n</ng-template>\n\n<ng-template #loginMod>\n    <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Login</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"modalRef.hide()\">\n        <span aria-hidden=\"true\">&times;</span>\n        </button>\n    </div>\n    <div class=\"modal-body\">\n\n        <form novalidate (ngSubmit)=\"submitLogin(loginForm)\" #loginForm=\"ngForm\">\n\n            <div class=\"form-group\"\n                [ngClass]=\"{\n                'has-danger': email.invalid && (email.dirty || email.touched),\n                'has-success': email.valid && (email.dirty || email.touched)\n            }\">\n                <label>Email</label>\n                <input type=\"email\"\n                        class=\"form-control\"\n                        name=\"email\"\n                        [(ngModel)]=\"model.email\"\n                        required\n                        pattern=\"[^ @]*@[^ @]*\"\n                        #email=\"ngModel\">\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"email.errors && (email.dirty || email.touched)\">\n                    <p *ngIf=\"email.errors.required\">Email is required</p>\n                    <p *ngIf=\"email.errors.pattern\">Email must contain at least the @ character</p>\n                </div>\n            </div>\n\n            <div class=\"form-group\"\n                [ngClass]=\"{\n                'has-danger': password.invalid && (password.dirty || password.touched),\n                'has-success': password.valid && (password.dirty || password.touched)\n            }\">\n                <label>Password</label>\n                <input type=\"password\"\n                        class=\"form-control\"\n                        name=\"password\"\n                        [(ngModel)]=\"model.password\"\n                        required\n                        minlength=\"8\"\n                        #password=\"ngModel\">\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"password.errors && (password.dirty || password.touched)\">\n                    <p *ngIf=\"password.errors.required\">Password is required</p>\n                    <p *ngIf=\"password.errors.minlength\">Password must be at least 8 characters long</p>\n                </div>\n            </div>\n\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"loginForm.invalid\">Login</button>\n\n        </form>\n    </div>\n</ng-template>"
+module.exports = "<div *ngIf=\"isAuthenticated\">\n    <button type=\"button\" class=\"btn\" (click)=\"goProfile()\">Profile</button>\n    /\n    <button type=\"button\" class=\"btn\" (click)=\"logout()\">Logout</button>\n</div>\n\n<div *ngIf=\"!isAuthenticated\">\n    <button type=\"button\" class=\"btn\" (click)=\"registerModal(registerMod)\">Register</button>\n    /\n    <button type=\"button\" class=\"btn\" (click)=\"loginModal(loginMod)\">Login</button>\n</div>\n\n<ng-template #registerMod>\n    <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Register</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"modalRef.hide()\">\n        <span aria-hidden=\"true\">&times;</span>\n        </button>\n    </div>\n    <div class=\"modal-body\">\n        <form novalidate (ngSubmit)=\"submitRegister(registerForm)\" #registerForm=\"ngForm\" autocomplete=\"off\">\n\n            <div class=\"form-group\">\n                <label>Full Name</label>\n                <input class=\"form-control\" type=\"text\" name=\"fullname\" #fullmame=\"ngModel\" [(ngModel)]=\"model.fullname\" required>\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"fullmame.errors && (fullmame.dirty || fullmame.touched)\">\n                   <p *ngIf=\"fullmame.errors.required\">Full Name is required</p>\n               </div>\n            </div>\n\n            <div class=\"form-group\">\n\n                <label for=\"applicant\">Applicant</label>\n                <input type=\"radio\" id=\"applicant\" name=\"role\" #role=\"ngModel\" [(ngModel)]=\"model.role\" value=\"applicant\">\n                <br>\n                <label for=\"recruiter\">Recruiter</label>\n                <input type=\"radio\" id=\"recruiter\" name=\"role\" #role=\"ngModel\" [(ngModel)]=\"model.role\" value=\"recruiter\">\n            </div>\n\n            <div class=\"form-group\"\n                [ngClass]=\"{\n                    'has-danger': email.invalid && (email.dirty || email.touched),\n                    'has-success': email.valid && (email.dirty || email.touched)\n                }\">\n               <label>Email</label>\n               <input type=\"email\"\n                      class=\"form-control\"\n                      autocomplete=\"off\"\n                      name=\"email\"\n                      [(ngModel)]=\"model.email\"\n                      required\n                      pattern=\"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\"\n                      #email=\"ngModel\">\n               <div class=\"form-control-feedback\"\n                    *ngIf=\"email.errors && (email.dirty || email.touched)\">\n                   <p *ngIf=\"email.errors.required\">Email is required</p>\n                   <p *ngIf=\"email.errors.pattern\">Email must contain at least the @ character and a . character</p>\n               </div>\n           </div>\n\n           <div class=\"form-group\"\n                [ngClass]=\"{\n                    'has-danger': password.invalid && (password.dirty || password.touched),\n                    'has-success': password.valid && (password.dirty || password.touched)\n                }\">\n                <label>Password</label>\n                <input type=\"password\"\n                        class=\"form-control\"\n                        autocomplete=\"off\"\n                        name=\"password\"\n                        [(ngModel)]=\"model.password\"\n                        required\n                        minlength=\"8\"\n                        #password=\"ngModel\">\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"password.errors && (password.dirty || password.touched)\">\n                    <p *ngIf=\"password.errors.required\">Password is required</p>\n                    <p *ngIf=\"password.errors.minlength\">Password must be at least 8 characters long</p>\n                </div>\n            </div>\n\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"registerForm.invalid\">Register</button>\n\n        </form>\n    </div>\n</ng-template>\n\n<ng-template #loginMod>\n    <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Login</h4>\n        <button type=\"button\" class=\"close pull-right\" aria-label=\"Close\" (click)=\"modalRef.hide()\">\n        <span aria-hidden=\"true\">&times;</span>\n        </button>\n    </div>\n    <div class=\"modal-body\">\n\n        <form novalidate (ngSubmit)=\"submitLogin(loginForm)\" #loginForm=\"ngForm\">\n\n            <div class=\"form-group\"\n                [ngClass]=\"{\n                'has-danger': email.invalid && (email.dirty || email.touched),\n                'has-success': email.valid && (email.dirty || email.touched)\n            }\">\n                <label>Email</label>\n                <input type=\"email\"\n                        class=\"form-control\"\n                        name=\"email\"\n                        [(ngModel)]=\"model.email\"\n                        required\n                        pattern=\"[^ @]*@[^ @]*\"\n                        #email=\"ngModel\">\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"email.errors && (email.dirty || email.touched)\">\n                    <p *ngIf=\"email.errors.required\">Email is required</p>\n                    <p *ngIf=\"email.errors.pattern\">Email must contain at least the @ character</p>\n                </div>\n            </div>\n\n            <div class=\"form-group\"\n                [ngClass]=\"{\n                'has-danger': password.invalid && (password.dirty || password.touched),\n                'has-success': password.valid && (password.dirty || password.touched)\n            }\">\n                <label>Password</label>\n                <input type=\"password\"\n                        class=\"form-control\"\n                        name=\"password\"\n                        [(ngModel)]=\"model.password\"\n                        required\n                        minlength=\"8\"\n                        #password=\"ngModel\">\n                <div class=\"form-control-feedback\"\n                    *ngIf=\"password.errors && (password.dirty || password.touched)\">\n                    <p *ngIf=\"password.errors.required\">Password is required</p>\n                    <p *ngIf=\"password.errors.minlength\">Password must be at least 8 characters long</p>\n                </div>\n            </div>\n\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"loginForm.invalid\">Login</button>\n\n        </form>\n    </div>\n</ng-template>"
 
 /***/ }),
 
@@ -1050,6 +1050,7 @@ var NavigationComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_BehaviorSubject__ = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__recruiter_recruiter__ = __webpack_require__("./src/app/recruiter/recruiter.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__auth_auth_service__ = __webpack_require__("./src/app/auth/auth.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1067,13 +1068,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var httpOptions = {
     headers: new __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["d" /* HttpHeaders */]({ 'Content-Type': 'application/json' })
 };
-var url = "https://jms-qiuzqyaygb.now.sh/api";
+var url = "http://localhost:3000/api";
 var DataService = /** @class */ (function () {
-    function DataService(_http) {
+    function DataService(_http, _authService) {
         this._http = _http;
+        this._authService = _authService;
         this.token = localStorage.getItem('jwt');
         this.dataRepo = {
             applicant: new __WEBPACK_IMPORTED_MODULE_0__shared_models_appliedpost__["a" /* AppliedPost */],
@@ -1103,10 +1106,18 @@ var DataService = /** @class */ (function () {
             var options = {
                 headers: new __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["d" /* HttpHeaders */]({ 'Authorization': "Bearer " + this.token, 'Content-Type': 'application/json' })
             };
-            this._http.get(url + "/applicant/info", options)
+            var decodedToken = this._authService.getDecodedToken();
+            this._http.get(url + "/applicant/info/" + decodedToken._id, options)
                 .subscribe(function (response) {
                 console.log(response);
-                _this.dataRepo.applicant = response;
+                _this.dataRepo.applicant.appliedpost = response.applications;
+                _this.dataRepo.applicant.applicant.address = response.address;
+                _this.dataRepo.applicant.applicant.applicant_id = response.applicant_id;
+                _this.dataRepo.applicant.applicant.dob = response.dob;
+                _this.dataRepo.applicant.applicant.email = response.email;
+                _this.dataRepo.applicant.applicant.liURL = response.liURL;
+                _this.dataRepo.applicant.applicant.name = response.name;
+                _this.dataRepo.applicant.applicant.phone = response.contact;
                 _this._applicant.next(Object.assign({}, _this.dataRepo).applicant);
             });
         }
@@ -1171,13 +1182,14 @@ var DataService = /** @class */ (function () {
         });
     };
     DataService.prototype.createNewJob = function (newJob) {
-        var jsonBody = { id: name, newJob: newJob };
+        var jsonBody = { newJob: newJob };
         var body = JSON.stringify(jsonBody);
         return this._http.post(url + "/jobPosition/create", body, httpOptions)
             .subscribe(function (result) { return console.log("New Position Created...", result); }, function (err) { return console.error(err); }, function () { return "Job Creation Operation Completed"; });
     };
     DataService.prototype.getRecruiterInfo = function () {
         var _this = this;
+        console.log('Inside Service');
         var token = localStorage.getItem('jwt');
         if (token) {
             var options = {
@@ -1185,7 +1197,7 @@ var DataService = /** @class */ (function () {
             };
             this._http.get(url + "/recruiter/info", options)
                 .subscribe(function (response) {
-                console.log(response);
+                console.log("My response", response);
                 _this.dataRepo.recruiter = response;
                 _this._recruiter.next(Object.assign({}, _this.dataRepo).recruiter);
             }, console.error, function () { return console.log('get recruiter info done'); });
@@ -1228,7 +1240,7 @@ var DataService = /** @class */ (function () {
     };
     DataService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClient */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__angular_common_http__["b" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_8__auth_auth_service__["a" /* AuthService */]])
     ], DataService);
     return DataService;
 }());
@@ -1301,8 +1313,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 // import { Observable} from 'rxjs/Observable';
 var PublishJobComponent = /** @class */ (function () {
-    function PublishJobComponent(dataService, router) {
-        this.dataService = dataService;
+    function PublishJobComponent(_dataService, router) {
+        this._dataService = _dataService;
         this.router = router;
     }
     PublishJobComponent.prototype.ngOnInit = function () {
@@ -1311,12 +1323,12 @@ var PublishJobComponent = /** @class */ (function () {
         var newJob = {
             title: this.title,
             description: this.description,
-            company: '',
             tags: this.tags,
+            company: "",
             status: 'Open',
             postDate: new Date()
         };
-        this.dataService.createNewJob(newJob);
+        this._dataService.createNewJob(newJob);
     };
     PublishJobComponent.prototype.onSubmit = function () {
         this.router.navigateByUrl('/updateRecruiter');
@@ -1359,7 +1371,7 @@ module.exports = "*{\n    background-color: gray;\n}"
 /***/ "./src/app/recruiter/recruiter-main/recruiter-info/recruiter-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\" style=\"width: 18rem;\">\n  <img class=\"card-img-top\" [src]=\"fullImagePath\" alt=\"Card image cap\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{recruiter.name}}</h5>\n    <p class=\"card-text\">{{recruiter.email}}</p>\n    <p class=\"card-text\">{{recruiter.address}}</p>\n    <p class=\"card-text\">{{recruiter.contact}}</p>\n    <button class=\"btn btn-primary\" (click)=\"openDialog()\">Update</button>\n  </div>\n</div>\n"
+module.exports = "<div class=\"card\" style=\"width: 18rem;\">\n  <img class=\"card-img-top\" [src]=\"fullImagePath\" alt=\"Card image cap\" >\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{recruiter.name}}</h5>\n    <p class=\"card-text\">{{recruiter.email}}</p>\n    <p class=\"card-text\">{{recruiter.address}}</p>\n    <p class=\"card-text\">{{recruiter.contact}}</p>\n    <button class=\"btn btn-primary\" (click)=\"openDialog()\">Update</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1392,7 +1404,8 @@ var RecruiterInfoComponent = /** @class */ (function () {
         this.dataService.recruiter.subscribe(function (response) {
             console.log("Recruiter", response);
             _this.recruiter = response;
-            console.log("True Recruiter", _this.recruiter);
+            _this.fullImagePath = _this.recruiter.logoURL || _this.fullImagePath;
+            // console.log("True Recruiter", this.recruiter);
         }, function (err) { return console.error(err); });
     };
     RecruiterInfoComponent = __decorate([
@@ -1636,7 +1649,7 @@ var RecruiterPositionInfoComponent = /** @class */ (function () {
 /***/ "./src/app/recruiter/recruiter-main/recruiter-positions/recruiter-positions-component/recruiter-positions.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"row\">\n  <div class=\"col-xs-4 col-sm-4 col-md-4\">\n    <h2>\n      Title\n    </h2>\n  </div>\n  <div class=\"col-xs-4 col-sm-4 col-md-4\">\n    <h2>\n      Post Date\n    </h2>\n  </div>\n  <div class=\"col-xs-4 col-sm-4 col-md-4\">\n    <h2>\n      Status\n    </h2>\n  </div>\n</div>\n\n<div *ngFor=\"let pos of jobPositions\">\n  <div class=\"row\">\n    \n    <div class=\"col-xs-4 col-sm-4 col-md-4\">\n      {{pos.title}}\n    </div>\n    <div class=\"col-xs-4 col-sm-4 col-md-4\">\n      {{pos.postDate}}\n    </div>\n    <div class=\"col-xs-4 col-sm-4 col-md-4\">\n      {{pos.status}}\n    </div>\n  </div>\n  <div class=\"row\">\n      <div class=\"col-xs-12 col-sm-12 col-md-12\">\n          <jmsapp-recruiter-position-info [aPos]=\"pos\"></jmsapp-recruiter-position-info>\n          <hr>\n        </div>\n  </div>\n\n</div> -->\n<div style=\"background-color:lightcyan\">\n  <ngx-datatable #myTable style=\"height:500px\" class='material expandable' [columnMode]=\"'force'\" [headerHeight]=\"50\" [footerHeight]=\"50\"\n    [rowHeight]=\"50\" [scrollbarV]=\"true\" [rows]='jobPositions' (page)=\"onPage($event)\">\n\n    <!-- Row Detail Template -->\n    <ngx-datatable-row-detail [rowHeight]=\"200\" #myDetailRow (toggle)=\"onDetailToggle($event)\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-row-detail-template>\n        <div style=\"padding-left:35px\">\n          <h3>Job Description</h3>\n          <p>Job Description for job_{{ row.id }}</p>\n          <button class=\"btn btn-primary offset-sm-4\" (click)=\"applyJob($event)\" id=\"{{ row.id }}\">\n            Apply for this position\n          </button>\n        </div>\n      </ng-template>\n    </ngx-datatable-row-detail>\n\n    <!-- Column Templates -->\n    <ngx-datatable-column [width]=\"50\" [resizeable]=\"false\" [sortable]=\"false\" [draggable]=\"false\" [canAutoResize]=\"false\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <a href=\"javascript:void(0)\" [class.datatable-icon-right]=\"!expanded\" [class.datatable-icon-down]=\"expanded\" title=\"Expand/Collapse Row\"\n          (click)=\"toggleExpandRow(row)\">\n        </a>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column name=\"Title\" width=\"100\">\n      <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" ngx-datatable-cell-template>\n        <strong>{{ row.title }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n    <ngx-datatable-column name=\"Post Date\" width=\"80\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <strong>{{ row.postDate | date: 'medium'}}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column name=\"Status\" width=\"80\">\n      <ng-template let-row=\"row\" ngx-datatable-cell-template>\n        <!-- <button class=\"btn btn-primary\" (click)=\"applyJob($event)\" id=\"job_{{ row.id }}\">\n          Apply\n        </button> -->\n        <ui-switch size=\"small\" [checked]=\"true\" (valueChange)=\"onValueChange($event)\"></ui-switch>\n      </ng-template>\n    </ngx-datatable-column>\n  </ngx-datatable>\n</div>"
+module.exports = "<!-- <div class=\"row\">\n  <div class=\"col-xs-4 col-sm-4 col-md-4\">\n    <h2>\n      Title\n    </h2>\n  </div>\n  <div class=\"col-xs-4 col-sm-4 col-md-4\">\n    <h2>\n      Post Date\n    </h2>\n  </div>\n  <div class=\"col-xs-4 col-sm-4 col-md-4\">\n    <h2>\n      Status\n    </h2>\n  </div>\n</div>\n\n<div *ngFor=\"let pos of jobPositions\">\n  <div class=\"row\">\n    \n    <div class=\"col-xs-4 col-sm-4 col-md-4\">\n      {{pos.title}}\n    </div>\n    <div class=\"col-xs-4 col-sm-4 col-md-4\">\n      {{pos.postDate}}\n    </div>\n    <div class=\"col-xs-4 col-sm-4 col-md-4\">\n      {{pos.status}}\n    </div>\n  </div>\n  <div class=\"row\">\n      <div class=\"col-xs-12 col-sm-12 col-md-12\">\n          <jmsapp-recruiter-position-info [aPos]=\"pos\"></jmsapp-recruiter-position-info>\n          <hr>\n        </div>\n  </div>\n\n</div> -->\n<div style=\"background-color:lightcyan\">\n  <ngx-datatable #myTable style=\"height:500px\" class='material expandable' [columnMode]=\"'force'\" [headerHeight]=\"50\" [footerHeight]=\"50\"\n    [rowHeight]=\"50\" [scrollbarV]=\"true\" [rows]='jobPositions' (page)=\"onPage($event)\">\n\n    <!-- Row Detail Template -->\n    <ngx-datatable-row-detail [rowHeight]=\"200\" #myDetailRow (toggle)=\"onDetailToggle($event)\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-row-detail-template>\n        <div style=\"padding-left:35px\">\n          <!-- <div *ngFor=\" let applicant of row.applicants\">\n            {{applicant.name}}\n          </div> -->\n          <h3>Job Description</h3>\n          <p>Job Description for job_{{ row.id }}</p>\n          <button class=\"btn btn-primary offset-sm-4\" (click)=\"applyJob($event)\" id=\"{{ row.id }}\">\n            Apply for this position\n          </button>\n        </div>\n      </ng-template>\n    </ngx-datatable-row-detail>\n\n    <!-- Column Templates -->\n    <ngx-datatable-column [width]=\"50\" [resizeable]=\"false\" [sortable]=\"false\" [draggable]=\"false\" [canAutoResize]=\"false\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <a href=\"javascript:void(0)\" [class.datatable-icon-right]=\"!expanded\" [class.datatable-icon-down]=\"expanded\" title=\"Expand/Collapse Row\"\n          (click)=\"toggleExpandRow(row)\">\n        </a>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column name=\"Title\" width=\"100\">\n      <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" ngx-datatable-cell-template>\n        <strong>{{ row.title }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n    <ngx-datatable-column name=\"Post Date\" width=\"80\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <strong>{{ row.postDate | date: 'MM/d/y'}}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column name=\"Status\" width=\"80\">\n      <ng-template let-row=\"row\" ngx-datatable-cell-template>\n        <!-- <button class=\"btn btn-primary\" (click)=\"applyJob($event)\" id=\"job_{{ row.id }}\">\n          Apply\n        </button> -->\n        <ui-switch size=\"small\" [checked]=\"true\" (valueChange)=\"onValueChange($event)\"></ui-switch>\n      </ng-template>\n    </ngx-datatable-column>\n  </ngx-datatable>\n</div>"
 
 /***/ }),
 
@@ -1666,15 +1679,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var RecruiterPositionsComponent = /** @class */ (function () {
-    function RecruiterPositionsComponent(dataService) {
+    function RecruiterPositionsComponent(_dataService) {
         var _this = this;
-        this.dataService = dataService;
+        this._dataService = _dataService;
         this.expanded = {};
-        this.dataService.getJobPosition();
-        this.dataService.jobPosition.subscribe(function (response) {
-            console.log("jobs");
-            _this.jobPositions = response;
-        });
+        this._dataService.getRecruiterInfo();
+        this._dataService.recruiter.subscribe(function (data) {
+            _this.jobPositions = data.positions;
+            return true;
+        }, console.error, function () { return console.log("Positions.fetched"); });
+        // this.dataService.getJobPosition();
+        // this.dataService.jobPosition.subscribe((response: JobPosition[]) => {
+        //   console.log("jobs");
+        //   this.jobPositions = response;
+        // });
     }
     RecruiterPositionsComponent.prototype.ngOnInit = function () {
         // this.getRecruitersInfo();
@@ -1797,8 +1815,6 @@ var RecruiterModule = /** @class */ (function () {
  */
 var Recruiter = /** @class */ (function () {
     function Recruiter() {
-        this.logoURL = "";
-        //  positions:JobPosition[];
     }
     return Recruiter;
 }());
@@ -1817,7 +1833,7 @@ module.exports = "img{\n    width: 200px;\n    height: 500px;\n}\n\nh1{\n    fon
 /***/ "./src/app/recruiter/update-recruiter/update-recruiter.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form (ngSubmit)=\"onSubmit()\" #f=\"ngForm\" class=\"form-control\">\n  <h1>Update Your Profile</h1>\n  <div class=\"myImg\">\n    <img [src]=\"fullImagePath\" alt=\"Logo\">\n  </div>\n  <div class=\"myImg\">\n    <input type=\"file\" name=\"imgFile\" (change)=\"getImage($event)\" class=\"btn btn-info\">\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': username.invalid && (username.touched || username.dirty),\n    'has-success': username.valid && (username.touched || username.dirty)\n  }\">\n    <label class=\"aria-label\">Name</label>\n    <input type=\"text\" name=\"name\" [(ngModel)]=\"name\" class=\"form-control\" required \n    #username=\"ngModel\"\n    placeholder=\"e.g. Joseph\">\n    <div class=\"form-control-feedback\" *ngIf=\"username.errors && (username.touched || username.dirty)\">\n      <p *ngIf=\"username.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userAddress.invalid && (userAddress.touched || userAddress.dirty),\n    'has-success': userAddress.valid && (userAddress.touched || userAddress.dirty)\n  }\">\n    <label class=\"aria-label\">Address</label>\n    <input type=\"text\" name=\"address\" [(ngModel)]=\"address\" class=\"form-control\" required #userAddress=\"ngModel\"\n    placeholder=\"e.g. 1000 N. 4th Street HR Building 141, Fairfield, IA 52557\">\n    <div class=\"form-control-feedback\" *ngIf=\"userAddress.errors && (userAddress.touched || userAddress.dirty)\">\n      <p *ngIf=\"userAddress.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userContact.invalid && (userContact.touched || userContact.dirty),\n    'has-success': userContact.valid && (userContact.touched || userContact.dirty)\n  }\">\n    <label class=\"aria-label\">Contact</label>\n    <input type=\"text\" name=\"contact\" [(ngModel)]=\"contact\" class=\"form-control\" required #userContact=\"ngModel\"\n    placeholder=\"e.g. Contact\">\n    <div class=\"form-control-feedback\" *ngIf=\"userContact.errors && (userContact.touched || userContact.dirty)\">\n      <p *ngIf=\"userContact.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userWebLink.invalid && (userWebLink.touched || userWebLink.dirty),\n    'has-success': userWebLink.valid && (userWebLink.touched || userWebLink.dirty)\n  }\">\n    <label class=\"aria-label\">WebLink</label>\n    <input type=\"text\" name=\"webLink\" [(ngModel)]=\"webLink\" class=\"form-control\" required #userWebLink=\"ngModel\"\n    placeholder=\"www.mum.edu\">\n    <div class=\"form-control-feedback\" *ngIf=\"userWebLink.errors && (userWebLink.touched || userWebLink.dirty)\"\n    placeholder = \"contactme.edu\">\n      <p *ngIf=\"userWebLink.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userEmail.invalid && (userEmail.touched || userEmail.dirty),\n    'has-success': userEmail.valid && (userEmail.touched || userEmail.dirty)\n  }\">\n    <label class=\"aria-label\">Email</label>\n    <input type=\"email\" name=\"email\" [(ngModel)]=\"email\" class=\"form-control\" required #userEmail=\"ngModel\">\n    <div class=\"form-control-feedback\" *ngIf=\"userEmail.errors && (userEmail.touched || userEmail.dirty)\">\n      <p *ngIf=\"userEmail.errors.required\">Required</p>\n    </div>\n\n  </div>\n  <div id=\"btn-submit\">\n    <input type=\"submit\" value=\"Submit\" class=\"btn btn-primary\">\n  </div>\n</form>"
+module.exports = "<form (ngSubmit)=\"onSubmit()\" #f=\"ngForm\" class=\"form-control\">\n  <h1>Update Your Profile</h1>\n  <div class=\"myImg\">\n    <img [src]=\"fullImagePath\" alt=\"Logo\">\n  </div>\n  <div class=\"myImg\">\n    <input type=\"file\" name=\"imgFile\" (change)=\"getImage($event)\" class=\"btn btn-info\">\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': username.invalid && (username.touched || username.dirty),\n    'has-success': username.valid && (username.touched || username.dirty)\n  }\">\n    <label class=\"aria-label\">Name</label>\n    <input type=\"text\" name=\"name\" [(ngModel)]=\"name\" class=\"form-control\" required \n    #username=\"ngModel\"\n    placeholder=\"e.g. Joseph\">\n    <div class=\"form-control-feedback\" *ngIf=\"username.errors && (username.touched || username.dirty)\">\n      <p *ngIf=\"username.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userAddress.invalid && (userAddress.touched || userAddress.dirty),\n    'has-success': userAddress.valid && (userAddress.touched || userAddress.dirty)\n  }\">\n    <label class=\"aria-label\">Address</label>\n    <input type=\"text\" name=\"address\" [(ngModel)]=\"address\" class=\"form-control\" required #userAddress=\"ngModel\"\n    placeholder=\"e.g. 1000 N. 4th Street HR Building 141, Fairfield, IA 52557\">\n    <div class=\"form-control-feedback\" *ngIf=\"userAddress.errors && (userAddress.touched || userAddress.dirty)\">\n      <p *ngIf=\"userAddress.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userContact.invalid && (userContact.touched || userContact.dirty),\n    'has-success': userContact.valid && (userContact.touched || userContact.dirty)\n  }\">\n    <label class=\"aria-label\">Contact</label>\n    <input type=\"text\" name=\"contact\" [(ngModel)]=\"contact\" class=\"form-control\" required #userContact=\"ngModel\"\n    placeholder=\"e.g. Contact\">\n    <div class=\"form-control-feedback\" *ngIf=\"userContact.errors && (userContact.touched || userContact.dirty)\">\n      <p *ngIf=\"userContact.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userWebLink.invalid && (userWebLink.touched || userWebLink.dirty),\n    'has-success': userWebLink.valid && (userWebLink.touched || userWebLink.dirty)\n  }\">\n    <label class=\"aria-label\">WebLink</label>\n    <input type=\"text\" name=\"webLink\" [(ngModel)]=\"webLink\" class=\"form-control\" required #userWebLink=\"ngModel\"\n    placeholder=\"www.mum.edu\">\n    <div class=\"form-control-feedback\" *ngIf=\"userWebLink.errors && (userWebLink.touched || userWebLink.dirty)\"\n    placeholder = \"contactme.edu\">\n      <p *ngIf=\"userWebLink.errors.required\">Required</p>\n    </div>\n  </div>\n\n  <div [ngClass]=\"{\n    'has-danger': userEmail.invalid && (userEmail.touched || userEmail.dirty),\n    'has-success': userEmail.valid && (userEmail.touched || userEmail.dirty)\n  }\">\n    <label class=\"aria-label\">Email</label>\n    <input type=\"email\" name=\"email\" \n    [(ngModel)]=\"email\" class=\"form-control\" required \n    pattern=\"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\"\n    #userEmail=\"ngModel\">\n    <div class=\"form-control-feedback\" \n    *ngIf=\"userEmail.errors && (userEmail.touched || userEmail.dirty)\">\n      <p *ngIf=\"userEmail.errors.required\">Required</p>\n      <p *ngIf=\"userEmail.errors.pattern\">Your email must have at least one @ and one . characters</p>\n    </div>\n\n  </div>\n  <div id=\"btn-submit\">\n    <input type=\"submit\" value=\"Submit\" class=\"btn btn-primary\">\n  </div>\n</form>"
 
 /***/ }),
 
@@ -1855,21 +1871,20 @@ var UpdateRecruiterComponent = /** @class */ (function () {
     UpdateRecruiterComponent.prototype.onSubmit = function () {
         // const fd = new FormData();
         // fd.append('image',this.selectedFile,this.selectedFile.name); 
-        console.log(this.jwtInfo.role);
+        // console.log(this.jwtInfo.role);
         var body = {
-            recruiter_id: this.jwtInfo._id,
-            name: this.name,
+            // name: this.name,
             address: this.address,
             contact: this.contact,
             webLink: this.userWebLink,
             email: this.email,
-            logoURL: ""
+            logoURL: "https://www.pexels.com/photo/nature-red-love-romantic-67636/"
         };
         // this._dataService.createRecruiter(body);
         this._dataService.updateRecruiter(body);
     };
     UpdateRecruiterComponent.prototype.getImage = function (event) {
-        // console.log(event);
+        console.log(event);
         // this.selectedFile = event.target.files[0];
     };
     UpdateRecruiterComponent = __decorate([
@@ -2079,7 +2094,7 @@ var SearchModule = /** @class */ (function () {
 /***/ "./src/app/search/search/search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"margin: 10px; z-index: 100;\">\n    <input type='text' style='padding:8px;margin:15px auto;width:30%;' \n      placeholder='Type to filter the column content...' (keyup)='updateFilter($event)'/>\n  <ngx-datatable #myTable style=\"height:500px; z-index: 1; \" class='material expandable' [columns]=\"columns\" [columnMode]=\"'force'\" [headerHeight]=\"50\" [footerHeight]=\"50\"\n    [rowHeight]=\"50\" [limit]=\"10\" [scrollbarV]=\"true\" [rows]='jobs' (page)=\"onPage($event)\">\n\n    <!-- Row Detail Template -->\n    <ngx-datatable-row-detail [rowHeight]=\"200\" #myDetailRow (toggle)=\"onDetailToggle($event)\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-row-detail-template>\n        <div style=\"padding-left:35px\">\n          <h3>Job Description</h3>\n          <p>Job Description for job_{{ row.id }}</p>\n          <button class=\"btn btn-primary offset-sm-4\" (click)=\"applyJob($event)\" id=\"{{ row.id }}\">\n            Apply for this position\n          </button>\n        </div>\n      </ng-template>\n    </ngx-datatable-row-detail>\n\n    <!-- Column Templates -->\n    <ngx-datatable-column [width]=\"50\" [resizeable]=\"false\" [sortable]=\"false\" [draggable]=\"false\" [canAutoResize]=\"false\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <a href=\"javascript:void(0)\" [class.datatable-icon-right]=\"!expanded\" [class.datatable-icon-down]=\"expanded\" title=\"Expand/Collapse Row\"\n          (click)=\"toggleExpandRow(row)\">\n        </a>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column name=\"Title\" width=\"100\">\n      <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" ngx-datatable-cell-template>\n        <strong>{{ row.title }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n    <ngx-datatable-column name=\"Company\" width=\"80\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <strong>{{ row.company }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n    <ngx-datatable-column name=\"Tags\" width=\"200\">\n      <ng-template let-row=\"row\" ngx-datatable-cell-template>\n        <strong>{{ row.tags }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column *ngIf=\"isApply\" name=\"Apply\" width=\"80\">\n      <ng-template let-row=\"row\" ngx-datatable-cell-template>\n        <button class=\"btn btn-primary\" (click)=\"applyJob($event)\" id=\"{{ row._id }}\">\n          Apply\n        </button>\n      </ng-template>\n    </ngx-datatable-column>\n  </ngx-datatable>\n</div>"
+module.exports = "<div style=\"margin: 10px; z-index: 100;\">\n    <input type='text' style='padding:8px;margin:15px auto;width:30%;' \n      placeholder='Type to filter the column content...' (keyup)='updateFilter($event)'/>\n  <ngx-datatable #myTable style=\"height:500px; z-index: 1; \" class='material expandable' [columns]=\"columns\" [columnMode]=\"'force'\" [headerHeight]=\"50\" [footerHeight]=\"50\"\n    [rowHeight]=\"50\" [limit]=\"10\" [scrollbarV]=\"true\" [rows]='jobs' (page)=\"onPage($event)\">\n\n    <!-- Row Detail Template -->\n    <ngx-datatable-row-detail [rowHeight]=\"200\" #myDetailRow (toggle)=\"onDetailToggle($event)\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-row-detail-template>\n        <div style=\"padding-left:35px\">\n          <h3>Job Description</h3>\n          <p>Job Description for job_{{ row.id }}</p>\n          <button *ngIf=\"isApply\" class=\"btn btn-primary offset-sm-4\" (click)=\"applyJob($event)\" id=\"{{ row.id }}\">\n            Apply for this position\n          </button>\n        </div>\n      </ng-template>\n    </ngx-datatable-row-detail>\n\n    <!-- Column Templates -->\n    <ngx-datatable-column [width]=\"50\" [resizeable]=\"false\" [sortable]=\"false\" [draggable]=\"false\" [canAutoResize]=\"false\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <a href=\"javascript:void(0)\" [class.datatable-icon-right]=\"!expanded\" [class.datatable-icon-down]=\"expanded\" title=\"Expand/Collapse Row\"\n          (click)=\"toggleExpandRow(row)\">\n        </a>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column name=\"Title\" width=\"100\">\n      <ng-template let-rowIndex=\"rowIndex\" let-row=\"row\" ngx-datatable-cell-template>\n        <strong>{{ row.title }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n    <ngx-datatable-column name=\"Company\" width=\"80\">\n      <ng-template let-row=\"row\" let-expanded=\"expanded\" ngx-datatable-cell-template>\n        <strong>{{ row.company }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n    <ngx-datatable-column name=\"Tags\" width=\"200\">\n      <ng-template let-row=\"row\" ngx-datatable-cell-template>\n        <strong>{{ row.tags }}</strong>\n      </ng-template>\n    </ngx-datatable-column>\n\n    <ngx-datatable-column *ngIf=\"isApply\" name=\"Apply\" width=\"80\">\n      <ng-template let-row=\"row\" ngx-datatable-cell-template>\n        <button class=\"btn btn-primary\" (click)=\"applyJob($event)\" id=\"{{ row._id }}\">\n          Apply\n        </button>\n      </ng-template>\n    </ngx-datatable-column>\n  </ngx-datatable>\n</div>"
 
 /***/ }),
 
@@ -2155,7 +2170,8 @@ var SearchComponent = /** @class */ (function () {
         // filter our data
         var temp = this._temp.filter(function (d) {
             console.log(d);
-            return d.title.toLowerCase().indexOf(val) !== -1 || !val;
+            return d.title.toLowerCase().indexOf(val) !== -1 || !val
+                || d.company.toLowerCase().indexOf(val) !== -1;
         });
         // update the rows
         this.jobs = temp;
@@ -2219,8 +2235,12 @@ var Applicant = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppliedPost; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__applicant__ = __webpack_require__("./src/app/shared/models/applicant.ts");
+
 var AppliedPost = /** @class */ (function () {
     function AppliedPost() {
+        this.applicant = new __WEBPACK_IMPORTED_MODULE_0__applicant__["a" /* Applicant */];
+        this.appliedpost = [];
     }
     return AppliedPost;
 }());
