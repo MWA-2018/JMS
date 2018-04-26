@@ -10,7 +10,7 @@
         <div style="padding-left:35px">
           <h3>Job Description</h3>
           <p>Job Description for job_{{ row.id }}</p>
-          <button class="btn btn-primary offset-sm-4" (click)="applyJob($event)" id="{{ row.id }}">
+          <button *ngIf="isApply" class="btn btn-primary offset-sm-4" (click)="applyJob($event)" id="{{ row.id }}">
             Apply for this position
           </button>
         </div>

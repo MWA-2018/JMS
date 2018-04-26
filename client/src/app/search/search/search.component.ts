@@ -67,7 +67,8 @@ export class SearchComponent {
     // filter our data
     const temp = this._temp.filter(function (d) {
       console.log(d);
-      return d.title.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.title.toLowerCase().indexOf(val) !== -1 || !val
+        || d.company.toLowerCase().indexOf(val) !== -1;
     });
 
     // update the rows
