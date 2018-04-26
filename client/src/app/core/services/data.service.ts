@@ -28,6 +28,7 @@ export class DataService {
     credentials: Credentials,
     jobPosition: JobPosition[],
     jobPosResault: JobPosition[],
+    appliedJobPos: JobPosition[],
     recruiter: Recruiter,
     authenticated: boolean,
     searchBarMini: boolean
@@ -49,6 +50,9 @@ export class DataService {
   private _jobPosResault: BehaviorSubject<JobPosition[]>;
   public jobPosResault: Observable<JobPosition[]>;
 
+  private _appliedJobPos: BehaviorSubject<JobPosition[]>;
+  public appliedJobPos: Observable<JobPosition[]>;
+
   private _recruiter: BehaviorSubject<Recruiter>;
   public recruiter: Observable<Recruiter>;
 
@@ -62,6 +66,7 @@ export class DataService {
       credentials: new Credentials,
       jobPosition: new Array<JobPosition>(),
       jobPosResault: new Array<JobPosition>(),
+      appliedJobPos: new Array<JobPosition>(),
       recruiter: new Recruiter,
       authenticated: false,
       searchBarMini: false,
@@ -78,6 +83,9 @@ export class DataService {
 
     this._jobPosResault = <BehaviorSubject<JobPosition[]>>new BehaviorSubject(new Array<JobPosition>());
     this.jobPosResault = this._jobPosResault.asObservable();
+
+    this._appliedJobPos = <BehaviorSubject<JobPosition[]>>new BehaviorSubject(new Array<JobPosition>());
+    this.appliedJobPos = this._appliedJobPos.asObservable();
 
     this._recruiter = <BehaviorSubject<Recruiter>>new BehaviorSubject(new Recruiter);
     this.recruiter = this._recruiter.asObservable();
@@ -109,6 +117,15 @@ export class DataService {
           this._applicant.next(Object.assign({}, this.dataRepo).applicant);
         });
     }
+  }
+
+  getAppliedJobPos(pos_id: string) {
+    this._http.get(url + "/jobPosition/search?_id=" + pos_id)
+      .subscribe((response: JobPosition[]) => {
+        console.log(response);
+        this.dataRepo.appliedJobPos = response;
+        this._appliedJobPos.next(Object.assign({}, this.dataRepo).appliedJobPos);
+      });
   }
 
   isAuthenticated() {

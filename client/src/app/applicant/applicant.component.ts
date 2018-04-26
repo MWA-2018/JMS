@@ -22,6 +22,9 @@ export class ApplicantComponent implements OnInit {
     this.positions = [];
     console.log('test');
     this._dataService.setSearchBarMini(true);
+    // this._dataService.appliedJobPos.subscribe((res: JobPosition[]) => {
+    //   this.positions = res;
+    // });
   }
 
   ngAfterViewInit() {
@@ -32,5 +35,7 @@ export class ApplicantComponent implements OnInit {
       console.log(this.applicant);
       this.cdRef.detectChanges();
     });
+    
+    
   }
 }

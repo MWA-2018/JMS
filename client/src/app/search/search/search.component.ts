@@ -58,6 +58,7 @@ export class SearchComponent {
     console.log(pos_id)
     let resault = this._dataService.updateApplicantJobPos(pos_id);
     console.log(resault);
+    this._dataService.getAppliedJobPos(pos_id);
     this._router.navigate(['jms/applicant']);
   }
 
