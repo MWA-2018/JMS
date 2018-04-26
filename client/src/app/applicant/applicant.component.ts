@@ -22,16 +22,16 @@ export class ApplicantComponent implements OnInit {
     this.positions = [];
     console.log('test');
     this._dataService.setSearchBarMini(true);
-    // this._dataService.appliedJobPos.subscribe((res: JobPosition[]) => {
-    //   this.positions = res;
-    // });
+    this._dataService.appliedJobPos.subscribe((res: JobPosition[]) => {
+      this.positions = res;
+    });
   }
 
   ngAfterViewInit() {
     this._dataService.applicant.subscribe((res: AppliedPost) => {
       console.log(res)
       this.applicant = res.applicant;
-      this.positions = res.appliedpost;
+      // this.positions = res.appliedpost;
       console.log(this.applicant);
       this.cdRef.detectChanges();
     });

@@ -54,10 +54,9 @@ export class SearchComponent {
 
   applyJob(event) {
     let srcElement = event.srcElement;
-    let pos_id = srcElement.attributes.id;
-    console.log(pos_id)
-    let resault = this._dataService.updateApplicantJobPos(pos_id);
-    console.log(resault);
+    let pos_id = srcElement.attributes.id.value;
+    // let resault = this._dataService.updateApplicantJobPos(pos_id);
+    // console.log(resault);
     this._dataService.getAppliedJobPos(pos_id);
     this._router.navigate(['jms/applicant']);
   }
