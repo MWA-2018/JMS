@@ -230,13 +230,14 @@ export class DataService {
     }
   }
 
-  updateApplicantJobPos() {
+  updateApplicantJobPos(pos_id:string) {
+    let obj = {pos_id: pos_id};
     if (this.token) {
       const options = {
         headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' })
       };
-      let body = JSON.stringify();
-      return this._http.post(`${url}/applicant/update`, body, options);
+      let body = JSON.stringify(obj);
+      return this._http.post(`${url}/applicant/updatepositions`, body, options);
     }
   }
 

@@ -2,11 +2,12 @@ import { Router } from "express";
 import { Applicant } from './model';
 import logger from "../util/logger";
 import { Address } from "../model/address";
+import { JobPosition } from "../jobPositions/model";
 //import { JobPosition } from "./model";
 
 const router = Router();
 interface addressInterface {
-    line1:string,
+    line1: string,
     line2: string,
     city: string,
     state: string,
@@ -32,11 +33,11 @@ router.get("/info", async (req: any, res: any) => {
 
 
 router.post("/update", async (req, res) => {
-let body = req.body;
+    let body = req.body;
     console.log("My URL=" + JSON.stringify(req.body));
 
-    const query ={
-        applicant_id:body.applicant_id
+    const query = {
+        applicant_id: body.applicant_id
     };
 
     const newApplicant = {
@@ -47,32 +48,36 @@ let body = req.body;
             contact: body.contact,
             email: body.email,
             liURL: body.liURL
-        }};
+        }
+    };
     console.log();
     logger.info("Applicant Updated");
-    await Applicant.findOneAndUpdate(query,newApplicant,{upsert:true, new:true});
+    await Applicant.findOneAndUpdate(query, newApplicant, { upsert: true, new: true });
     res.send({});
 
 });
 
-router.post("/updatepositions", async (req, res) => {
+router.post("/updatepositions", async (req: any, res) => {
     let body = req.body;
-        console.log("My URL=" + JSON.stringify(req.body));
+    console.log("My URL=" + JSON.stringify(req.body));
 
-        const query ={
-            applicant_id:body.applicant_id
-        };
+    const query = {
+        applicant_id: req._id
+    };
 
-        const newApplicant = {
-            $set: {
-                positions:{$push: body.positions}
-            }};
-        console.log();
-        logger.info("Applicant Updated");
-        await Applicant.findOneAndUpdate(query,newApplicant,{upsert:true, new:true});
-        res.send({});
+    const newApplicant = {
+        $set: {
+            positions: { $push: body.pos_id }
+        }
+    };
+    console.log();
+    logger.info("Applicant Updated");
+    await Applicant.findOneAndUpdate(query, newApplicant, { upsert: true, new: true });
+    await JobPosition.findOneAndUpdate({position_id: req.body.pos_id}, 
+        {$set:{applicant_ids: {$push: req._id}}}, { upsert: true, new: true });
+    res.send({});
 
-    });
+});
 
 
 export const ApplicantController: Router = router;

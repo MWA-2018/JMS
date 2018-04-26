@@ -21,11 +21,13 @@ export class SearchComponent {
   expanded: any = {};
   timeout: any;
 
-  jobs: JobPosition[];
+  jobs: JobPosition[] = [];
   loading: boolean;
   isApply: boolean;
   constructor(private _dataService: DataService, private _authService: AuthService, private _router: Router) {
-    // this._dataService.getJobPosition();
+    if(this.jobs.length === 0) {
+      this._dataService.getJobPosResault();
+    }
     this._dataService.jobPosResault.subscribe((response: JobPosition[]) => {
       this.jobs = response;
       this._temp = response;
@@ -54,8 +56,9 @@ export class SearchComponent {
     let srcElement = event.srcElement;
     let pos_id = srcElement.attributes.id;
     console.log(pos_id)
-    this._dataService.updateApplicantJobPos();
-
+    let resault = this._dataService.updateApplicantJobPos(pos_id);
+    console.log(resault);
+    this._router.navigate(['jms/applicant']);
   }
 
   updateFilter(event) {
@@ -64,8 +67,7 @@ export class SearchComponent {
     // filter our data
     const temp = this._temp.filter(function (d) {
       console.log(d);
-      return d.title.toLowerCase().indexOf(val) !== -1 || !val
-        || d.tags.toLowerCase().indexOf(val) !== -1;
+      return d.title.toLowerCase().indexOf(val) !== -1 || !val;
     });
 
     // update the rows
