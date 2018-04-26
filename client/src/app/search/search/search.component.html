@@ -1,6 +1,8 @@
 <div style="margin: 10px; z-index: 100;">
-  <ngx-datatable #myTable style="height:500px" class='material expandable' [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50"
-    [scrollbarV]="true" [rows]='jobs' (page)="onPage($event)">
+    <input type='text' style='padding:8px;margin:15px auto;width:30%;' 
+      placeholder='Type to filter the column content...' (keyup)='updateFilter($event)'/>
+  <ngx-datatable #myTable style="height:500px; z-index: 1; " class='material expandable' [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+    [rowHeight]="50" [limit]="10" [scrollbarV]="true" [rows]='jobs' (page)="onPage($event)">
 
     <!-- Row Detail Template -->
     <ngx-datatable-row-detail [rowHeight]="200" #myDetailRow (toggle)="onDetailToggle($event)">
@@ -39,10 +41,10 @@
         <strong>{{ row.tags }}</strong>
       </ng-template>
     </ngx-datatable-column>
-    
+
     <ngx-datatable-column *ngIf="isApply" name="Apply" width="80">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <button class="btn btn-primary" (click)="applyJob($event)" id="job_{{ row.id }}">
+        <button class="btn btn-primary" (click)="applyJob($event)" id="{{ row._id }}">
           Apply
         </button>
       </ng-template>

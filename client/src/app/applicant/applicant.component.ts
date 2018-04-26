@@ -21,6 +21,7 @@ export class ApplicantComponent implements OnInit {
     this.applicant = new Applicant();
     this.positions = [];
     console.log('test');
+    this._dataService.setSearchBarMini(true);
   }
 
   ngAfterViewInit() {

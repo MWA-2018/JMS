@@ -29,7 +29,11 @@ export class DataService {
     jobPosResault: JobPosition[],
     recruiter: Recruiter,
     authenticated: boolean,
+    searchBarMini: boolean
   };
+
+
+
 
   private _applicant: BehaviorSubject<AppliedPost>;
   public applicant: Observable<AppliedPost>;
@@ -47,6 +51,9 @@ export class DataService {
   private _recruiter: BehaviorSubject<Recruiter>;
   public recruiter: Observable<Recruiter>;
 
+  private _searchBarMini: BehaviorSubject<Boolean>;
+  public searchBarMini: Observable<Boolean>;
+
   constructor(private _http: HttpClient) {
     this.dataRepo = {
       applicant: new AppliedPost,
@@ -55,6 +62,7 @@ export class DataService {
       jobPosResault: new Array<JobPosition>(),
       recruiter: new Recruiter,
       authenticated: false,
+      searchBarMini: false,
     };
 
     this._credentials = <BehaviorSubject<Credentials>>new BehaviorSubject(new Credentials);
@@ -67,17 +75,20 @@ export class DataService {
     this.jobPosition = this._jobPosition.asObservable();
 
     this._jobPosResault = <BehaviorSubject<JobPosition[]>>new BehaviorSubject(new Array<JobPosition>());
-    this.jobPosResault = this._jobPosition.asObservable();
+    this.jobPosResault = this._jobPosResault.asObservable();
 
     this._recruiter = <BehaviorSubject<Recruiter>>new BehaviorSubject(new Recruiter);
     this.recruiter = this._recruiter.asObservable();
+
+    this._searchBarMini = <BehaviorSubject<Boolean>>new BehaviorSubject(new Boolean);
+    this.searchBarMini = this._searchBarMini.asObservable();
   }
 
   getApplicantInfo() {
 
     if (this.token) {
       const options = {
-        headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` , 'Content-Type': 'application/json' }, )
+        headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' }, )
       };
       this._http.get(`${url}/applicant/info`, options)
         .subscribe((response: AppliedPost) => {
@@ -92,6 +103,11 @@ export class DataService {
 
   isAuthenticated() {
     return !!this.token;
+  }
+
+  setSearchBarMini(flag: boolean) {
+    this.dataRepo.searchBarMini = flag;
+    this._searchBarMini.next(Object.assign({}, this.dataRepo).searchBarMini);
   }
 
   login(credentials: any) {
@@ -145,10 +161,17 @@ export class DataService {
       console.log(response);
       this.dataRepo.jobPosition = response;
       this._jobPosition.next(Object.assign({}, this.dataRepo).jobPosition);
-    }, err => { console.log(err)}, () => { console.log("Get job position done") });
+    }, err => { console.log(err) }, () => { console.log("Get job position done") });
   }
 
-  searchJobPosition(query: string) {
+  getJobPosResault() {
+    this._http.get(url + "/jobPosition")
+      .subscribe((response: JobPosition[]) => {
+        this.dataRepo.jobPosResault = response;
+        this._jobPosResault.next(Object.assign({}, this.dataRepo).jobPosResault);
+      });
+  }
+  searchJobPosResault(query: string) {
     this._http.get(url + "/jobPosition/search?" + query)
       .subscribe((response: JobPosition[]) => {
         this.dataRepo.jobPosResault = response;
@@ -157,13 +180,13 @@ export class DataService {
   }
 
   createNewJob(newJob) {
-    let jsonBody = {id:name, newJob: newJob};
+    let jsonBody = { id: name, newJob: newJob };
     let body = JSON.stringify(jsonBody);
     return this._http.post(url + "/jobPosition/create", body, httpOptions)
       .subscribe(
         result => console.log("New Position Created...", result),
         err => console.error(err),
-      ()=>"Job Creation Operation Completed"
+        () => "Job Creation Operation Completed"
       );
   }
 
@@ -175,17 +198,17 @@ export class DataService {
       };
 
       this._http.get(`${url}/recruiter/info`, options)
-        .subscribe((response : Recruiter) => {
+        .subscribe((response: Recruiter) => {
           console.log(response);
           this.dataRepo.recruiter = response;
           this._recruiter.next(Object.assign({}, this.dataRepo).recruiter);
-        }, console.error, ()=>console.log('get recruiter info done'));
+        }, console.error, () => console.log('get recruiter info done'));
     }
   }
 
   createRecruiter(newRecruiter) {
     let body = JSON.stringify(newRecruiter);
-    return this._http.post(url+"/recruiter/create", body, httpOptions).subscribe(
+    return this._http.post(url + "/recruiter/create", body, httpOptions).subscribe(
       result => {
         console.log("Creating Recruiter.....", result);
         return true;
@@ -200,16 +223,26 @@ export class DataService {
 
     if (this.token) {
       const options = {
-        headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`,'Content-Type': 'application/json' })
+        headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' })
       };
       let body = JSON.stringify(applicantInfo);
       return this._http.post(`${url}/applicant/update`, body, options);
     }
   }
 
-  updateRecruiter(updatedRecruiter){
+  updateApplicantJobPos() {
+    if (this.token) {
+      const options = {
+        headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' })
+      };
+      let body = JSON.stringify();
+      return this._http.post(`${url}/applicant/update`, body, options);
+    }
+  }
+
+  updateRecruiter(updatedRecruiter) {
     let body = JSON.stringify(updatedRecruiter);
-    return this._http.put(url+"/recruiter/update", body, httpOptions).subscribe(
+    return this._http.put(url + "/recruiter/update", body, httpOptions).subscribe(
       result => {
         console.log("Updating Recruiter ...", result);
         return true;

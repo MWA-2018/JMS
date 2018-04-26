@@ -15,18 +15,20 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent {
 
+  private _temp: JobPosition[];
   @ViewChild('myTable') table: any;
 
   expanded: any = {};
   timeout: any;
 
-  jobs: any[] = [];
+  jobs: JobPosition[];
   loading: boolean;
   isApply: boolean;
   constructor(private _dataService: DataService, private _authService: AuthService, private _router: Router) {
     // this._dataService.getJobPosition();
     this._dataService.jobPosResault.subscribe((response: JobPosition[]) => {
       this.jobs = response;
+      this._temp = response;
     });
 
     this.isApply = this._authService.isAuthenticated();
@@ -49,11 +51,28 @@ export class SearchComponent {
   }
 
   applyJob(event) {
-    alert("Go to Register or User profile page.");
-    
+    let srcElement = event.srcElement;
+    let pos_id = srcElement.attributes.id;
+    console.log(pos_id)
+    this._dataService.updateApplicantJobPos();
+
   }
 
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
 
+    // filter our data
+    const temp = this._temp.filter(function (d) {
+      console.log(d);
+      return d.title.toLowerCase().indexOf(val) !== -1 || !val
+        || d.tags.toLowerCase().indexOf(val) !== -1;
+    });
+
+    // update the rows
+    this.jobs = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.table.offset = 0;
+  }
 
 }
 

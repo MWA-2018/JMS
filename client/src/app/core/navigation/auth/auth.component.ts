@@ -51,6 +51,8 @@ export class AuthComponent implements OnInit {
       }, 200);
 
     }, console.error);
+
+    this._dataService.setSearchBarMini(true);
   }
 
   submitRegister(registerForm) {
@@ -72,6 +74,7 @@ export class AuthComponent implements OnInit {
     this._dataService.logout();
     this.isAuthenticated = false;
     this._router.navigate(['']);
+    this._dataService.setSearchBarMini(false);
   }
 
   goProfile() {

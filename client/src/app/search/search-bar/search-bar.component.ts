@@ -21,6 +21,7 @@ export class SearchBarComponent implements OnInit {
   searchbar: Object = { 'row': true, 'search-bar': true };
   searchinput: Object = { 'form-input': true, 'search-input': true };
   suggestions: string[] = [];
+  searchBarMini: boolean;
 
   ngOnInit() {
     this._dataService.getJobPosition();
@@ -32,6 +33,27 @@ export class SearchBarComponent implements OnInit {
         this.suggestions.push('no suggestion right now!');
       }
     }, console.error, () => console.log("Initial the search suggestion sccessed! "));
+    if (this._dataService.isAuthenticated) {
+      this._dataService.setSearchBarMini(true);
+    } else {
+      this._dataService.setSearchBarMini(false);      
+    }
+    this._dataService.searchBarMini.subscribe((flag: boolean) => {
+      // Move the search bar to the top left corner
+      if (flag) {
+        this.searchbar = {
+          'row': true, 'search-bar': true, 'fold': true
+        };
+        this.searchinput = { 'form-input': true, 'search-input': true, 'fold': true };
+        // Hide the backgroud image
+        this.bkgnd = { 'bkgnd': true, 'shadow': true, 'fold': true };
+      } else {
+        this.searchbar = { 'row': true, 'search-bar': true };
+        this.searchinput = { 'form-input': true, 'search-input': true };
+        // Hide the backgroud image
+        this.bkgnd = { 'bkgnd': true, 'shadow': true };
+      }
+    })
   }
 
   asyncSelected: string;
@@ -68,19 +90,13 @@ export class SearchBarComponent implements OnInit {
   onSearch(event) {
     if (this.asyncSelected) {
       console.log("searching.....");
-      this._dataService.searchJobPosition('title=' + this.asyncSelected);
+      this._dataService.searchJobPosResault('title=' + this.asyncSelected);
+    } else {
+      console.log("getting......");
+      this._dataService.getJobPosResault();
     }
-    // Move the search bar to the top left corner
-    this.searchbar = {
-      'row': true, 'search-bar': true, 'fold': true
-    };
-    this.searchinput = { 'form-input': true, 'search-input': true, 'fold': true };
-    // Hide the backgroud image
-    this.bkgnd = { 'bkgnd': true, 'shadow': true, 'fold': true };
-    
+    this._dataService.setSearchBarMini(true);
     this._router.navigate(['/jms/search']);
-    
-
   }
 }
 

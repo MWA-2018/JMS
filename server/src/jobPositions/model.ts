@@ -11,12 +11,12 @@ import { model, Schema } from "mongoose";
 const jobPositionSchema: Schema = new Schema({
     position_id:String,
     title: String,
+    company: String,
     description: String,
     tags: String,
     status: String,
     postDate: { type: Date, default: new Date() },
     applicant_ids: [String],
-    recruiter_ids: [String]
 });
 
 export const JobPosition = model("job_position", jobPositionSchema);

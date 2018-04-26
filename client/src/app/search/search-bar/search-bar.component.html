@@ -1,6 +1,6 @@
 <div [ngClass]="bkgnd">
     <div [ngClass]="searchbar">
-        <input style="display: 'block', 'z-index': '99999'" [(ngModel)]="asyncSelected" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)"
+        <input style="display: 'block'; z-index: '99999';" [(ngModel)]="asyncSelected" [typeahead]="dataSource" (typeaheadLoading)="changeTypeaheadLoading($event)"
             (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="7" typeaheadOptionField="name" placeholder="Locations loaded with timeout"
             [ngClass]="searchinput">
         <div *ngIf="typeaheadLoading">Loading</div>
