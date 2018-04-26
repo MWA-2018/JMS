@@ -12,6 +12,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class ApplicantInfoComponent implements OnInit {
   @Input() applicant: Applicant;
+
   bsModalRef: BsModalRef;
   constructor(private _modalService: BsModalService) { }
 
@@ -20,10 +21,12 @@ export class ApplicantInfoComponent implements OnInit {
   }
 
   onUpdate() {
+
     const config = {
       ignoreBackdropClick : true,
       class: 'modal-dialog-centered'
     }
+
     this.bsModalRef = this._modalService.show(UpdateApplicantInfoComponent, config);
   }
 
