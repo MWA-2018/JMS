@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<navigation></navigation>\n\n<!-- <jmsapp-recruiter-main></jmsapp-recruiter-main> -->\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<jmsapp-update-recruiter></jmsapp-update-recruiter>\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<!-- <jmsapp-update-recruiter></jmsapp-update-recruiter> -->\n\n<!-- <jmsapp-applicant></jmsapp-applicant> -->\n<!-- <jmsapp-search-bar></jmsapp-search-bar> -->\n\n<router-outlet></router-outlet>\n\n"
+module.exports = "<navigation></navigation>\n\n<!-- <jmsapp-recruiter-main></jmsapp-recruiter-main> -->\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<!-- <jmsapp-update-recruiter></jmsapp-update-recruiter> -->\n<!-- <jmsapp-publish-job></jmsapp-publish-job> -->\n<!-- <jmsapp-update-recruiter></jmsapp-update-recruiter> -->\n\n<!-- <jmsapp-applicant></jmsapp-applicant> -->\n<!-- <jmsapp-search-bar></jmsapp-search-bar> -->\n\n<router-outlet></router-outlet>\n\n"
 
 /***/ }),
 
@@ -192,7 +192,7 @@ module.exports = ""
 /***/ "./src/app/applicant/applicant-info/applicant-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\" style=\"width: 18rem;\">\n    <img class=\"card-img-top\" src=\"...\" alt=\"Card image cap\">\n    <div class=\"card-body\">\n      <h5 class=\"card-title\">{{applicant.name}}</h5>\n      <p class=\"card-text\">{{applicant.email}}</p>\n      <p class=\"card-text\">{{applicant.dob}}</p>\n      <p class=\"card-text\">{{applicant.address}}</p>\n      <p class=\"card-text\">{{applicant.liURL}}</p>\n      <a href=\"#\" class=\"btn btn-primary\" (click)=\"onUpdate()\">Update</a>\n    </div>\n  </div>\n"
+module.exports = "<div class=\"card\" style=\"width: 18rem;\">\n    <img class=\"card-img-top\" src=\"/assets/images/profile.png\" alt=\"Card image cap\">\n    <div class=\"card-body\">\n      <h5 class=\"card-title\">{{applicant.name}}</h5>\n      <p class=\"card-text\">{{applicant.email}}</p>\n      <p class=\"card-text\">{{applicant.dob}}</p>\n      <p class=\"card-text\">{{applicant.address.line1}}</p>\n      <p class=\"card-text\">{{applicant.liURL}}</p>\n      <a class=\"btn btn-primary\" (click)=\"onUpdate()\">Update</a>\n    </div>\n  </div>\n"
 
 /***/ }),
 
@@ -205,6 +205,7 @@ module.exports = "<div class=\"card\" style=\"width: 18rem;\">\n    <img class=\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__update_applicant_info_update_applicant_info_component__ = __webpack_require__("./src/app/applicant/update-applicant-info/update-applicant-info.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ngx_bootstrap__ = __webpack_require__("./node_modules/ngx-bootstrap/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_auth_service__ = __webpack_require__("./src/app/auth/auth.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -218,18 +219,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ApplicantInfoComponent = /** @class */ (function () {
-    function ApplicantInfoComponent(_modalService) {
+    function ApplicantInfoComponent(_modalService, _authService) {
         this._modalService = _modalService;
+        this._authService = _authService;
     }
     ApplicantInfoComponent.prototype.ngOnInit = function () {
     };
     ApplicantInfoComponent.prototype.onUpdate = function () {
         var config = {
+            // backdrop:'static',
             ignoreBackdropClick: true,
             class: 'modal-dialog-centered'
         };
         this.bsModalRef = this._modalService.show(__WEBPACK_IMPORTED_MODULE_2__update_applicant_info_update_applicant_info_component__["a" /* UpdateApplicantInfoComponent */], config);
+        var decodedToken = this._authService.getDecodedToken();
+        console.log(this.applicant);
+        this.applicant.applicant_id = decodedToken._id;
+        this.applicant.name = decodedToken.fullnames;
+        this.bsModalRef.content.applicant = this.applicant;
+        //this.bsModalRef.content.applic
+        // this.applicant.email = decodedToken.email;
+        // this.applicant.name = decodedToken.fullname;
+        // this.applicant.applicant_id = decodedToken._id;
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Input"])(),
@@ -241,7 +254,7 @@ var ApplicantInfoComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/applicant/applicant-info/applicant-info.component.html"),
             styles: [__webpack_require__("./src/app/applicant/applicant-info/applicant-info.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ngx_bootstrap__["c" /* BsModalService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ngx_bootstrap__["c" /* BsModalService */], __WEBPACK_IMPORTED_MODULE_4__auth_auth_service__["a" /* AuthService */]])
     ], ApplicantInfoComponent);
     return ApplicantInfoComponent;
 }());
@@ -590,7 +603,7 @@ module.exports = ""
 /***/ "./src/app/applicant/update-applicant-info/update-applicant-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title pull-left\">Update Profile Info</h4>\n</div>\n<div class=\"modal-body\">\n  <form (ngSubmit)=\"onSubmit()\" #f=\"ngForm\">\n      <div>\n          <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"applicant.applicant_id\" name=\"id\" hidden=true>\n        </div>\n    <div>\n      <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"applicant.name\" name=\"name\" placeholder=\"Name\">\n    </div>\n\n    <div>\n      <input type=\"email\" class=\"form-control input-sm\" name=\"email\" [(ngModel)]=\"applicant.email\" placeholder=\"Email\">\n    </div>\n    <div class=\"form-group\">\n    <div>\n      <input type=\"date\" class=\"form-control input-sm\" name=\"dob\" [(ngModel)]=\"applicant.dob\" placeholder=\"Date of Birth\">\n    </div>\n  </div>\n    <div class=\"form-group\">\n      <label for=\"inputAddress\">Address</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputAddress\" placeholder=\"1234 Main St\" [(ngModel)]=\"applicant.address.line1\" name=\"addressline1\" placeholder=\"Address Line 1\">\n    </div>\n    <div class=\"form-group\">\n      <input type=\"text\" class=\"form-control\" id=\"inputAddress2\" placeholder=\"Apartment, studio, or floor\" [(ngModel)]=\"applicant.address.line2\"\n        name=\"addressline2\" placeholder=\"Address Line 2\">\n    </div>\n    <div class=\"form-row\">\n      <div class=\"form-group col-md-6\">\n        <input type=\"text\" class=\"form-control\" id=\"inputCity\" [(ngModel)]=\"applicant.address.city\" name=\"city\" placeholder=\"City\">\n      </div>\n      <div class=\"form-group col-md-4\">\n        <select id=\"inputState\" class=\"form-control\" [(ngModel)]=\"applicant.address.state\" name=\"state\" placeholder=\"State\">\n          <option selected>Choose...</option>\n          <option>...</option>\n        </select>\n      </div>\n      <div class=\"form-group col-md-2\">\n        <input type=\"text\" class=\"form-control\" id=\"inputZip\" [(ngModel)]=\"applicant.address.zipCode\" name=\"zip\" placeholder=\"Zip\">\n      </div>\n    </div>\n    <div>\n      <input type=\"text\" class=\"form-control input-sm\" name=\"url\" [(ngModel)]=\"applicant.liURL\" placeholder=\"LinkedIn URL..\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"profileimg\"></label>\n      <input type=\"file\" class=\"form-control-file\" id=\"profileimg\" aria-describedby=\"fileHelp\">\n    </div>\n    <div>\n      <input type=\"submit\" value=\"Update\" class=\"btn btn-primary\">\n    </div>\n  </form>\n\n</div>\n"
+module.exports = "\n    <div class=\"modal-header\">\n        <h4 class=\"modal-title pull-left\">Update Profile Info</h4>\n      </div>\n      <div class=\"modal-body\">\n        <form (ngSubmit)=\"onSubmit()\" #f=\"ngForm\">\n            <div>\n                <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"applicant.applicant_id\" name=\"id\" hidden=true>\n              </div>\n          <div>\n            <input type=\"text\" class=\"form-control input-sm\" [(ngModel)]=\"applicant.name\" name=\"name\" placeholder=\"Name\">\n          </div>\n      \n          <div>\n            <input type=\"email\" class=\"form-control input-sm\" name=\"email\" [(ngModel)]=\"applicant.email\" placeholder=\"Email\">\n          </div>\n          <div class=\"form-group\">\n          <div>\n            <input type=\"date\" class=\"form-control input-sm\" name=\"dob\" [(ngModel)]=\"applicant.dob\" placeholder=\"Date of Birth\">\n          </div>\n        </div>\n          <div class=\"form-group\">\n            <label for=\"inputAddress\">Address</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputAddress\" placeholder=\"1234 Main St\" [(ngModel)]=\"applicant.address.line1\" name=\"addressline1\" placeholder=\"Address Line 1\">\n          </div>\n          <div class=\"form-group\">\n            <input type=\"text\" class=\"form-control\" id=\"inputAddress2\" placeholder=\"Apartment, studio, or floor\" [(ngModel)]=\"applicant.address.line2\"\n              name=\"addressline2\" placeholder=\"Address Line 2\">\n          </div>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-6\">\n              <input type=\"text\" class=\"form-control\" id=\"inputCity\" [(ngModel)]=\"applicant.address.city\" name=\"city\" placeholder=\"City\">\n            </div>\n            <div class=\"form-group col-md-4\">\n              <select id=\"inputState\" class=\"form-control\" [(ngModel)]=\"applicant.address.state\" name=\"state\" placeholder=\"State\">\n                <option selected>Choose...</option>\n                <option>...</option>\n              </select>\n            </div>\n            <div class=\"form-group col-md-2\">\n              <input type=\"text\" class=\"form-control\" id=\"inputZip\" [(ngModel)]=\"applicant.address.zipCode\" name=\"zip\" placeholder=\"Zip\">\n            </div>\n          </div>\n          <div>\n            <input type=\"text\" class=\"form-control input-sm\" name=\"url\" [(ngModel)]=\"applicant.liURL\" placeholder=\"LinkedIn URL..\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"profileimg\"></label>\n            <input type=\"file\" class=\"form-control-file\" id=\"profileimg\" aria-describedby=\"fileHelp\">\n          </div>\n          <div>\n            <input type=\"submit\" value=\"Update\" class=\"btn btn-primary\">\n          </div>\n        </form>\n      \n      </div>"
 
 /***/ }),
 
@@ -1321,10 +1334,10 @@ var PublishJobComponent = /** @class */ (function () {
     };
     PublishJobComponent.prototype.createNewJob = function () {
         var newJob = {
+            company: "",
             title: this.title,
             description: this.description,
             tags: this.tags,
-            company: "",
             status: 'Open',
             postDate: new Date()
         };
@@ -1381,7 +1394,9 @@ module.exports = "<div class=\"card\" style=\"width: 18rem;\">\n  <img class=\"c
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecruiterInfoComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__core_services_data_service__ = __webpack_require__("./src/app/core/services/data.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__recruiter__ = __webpack_require__("./src/app/recruiter/recruiter.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__core_services_data_service__ = __webpack_require__("./src/app/core/services/data.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1393,9 +1408,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var RecruiterInfoComponent = /** @class */ (function () {
-    function RecruiterInfoComponent(dataService) {
+    function RecruiterInfoComponent(dataService, router) {
         this.dataService = dataService;
+        this.router = router;
         this.fullImagePath = "/assets/images/profile.png";
     }
     RecruiterInfoComponent.prototype.ngOnInit = function () {
@@ -1403,10 +1421,18 @@ var RecruiterInfoComponent = /** @class */ (function () {
         this.dataService.getRecruiterInfo();
         this.dataService.recruiter.subscribe(function (response) {
             console.log("Recruiter", response);
-            _this.recruiter = response;
+            if (response) {
+                _this.recruiter = response;
+            }
+            else {
+                _this.recruiter = new __WEBPACK_IMPORTED_MODULE_1__recruiter__["a" /* Recruiter */]();
+            }
             _this.fullImagePath = _this.recruiter.logoURL || _this.fullImagePath;
             // console.log("True Recruiter", this.recruiter);
         }, function (err) { return console.error(err); });
+    };
+    RecruiterInfoComponent.prototype.openDialog = function () {
+        this.router.navigateByUrl('recruiter/profile');
     };
     RecruiterInfoComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -1414,7 +1440,7 @@ var RecruiterInfoComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/recruiter/recruiter-main/recruiter-info/recruiter-info.component.html"),
             styles: [__webpack_require__("./src/app/recruiter/recruiter-main/recruiter-info/recruiter-info.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__core_services_data_service__["a" /* DataService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__core_services_data_service__["a" /* DataService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* Router */]])
     ], RecruiterInfoComponent);
     return RecruiterInfoComponent;
 }());
@@ -1685,7 +1711,12 @@ var RecruiterPositionsComponent = /** @class */ (function () {
         this.expanded = {};
         this._dataService.getRecruiterInfo();
         this._dataService.recruiter.subscribe(function (data) {
-            _this.jobPositions = data.positions;
+            if (data) {
+                _this.jobPositions = data.positions;
+            }
+            else {
+                _this.jobPositions = [];
+            }
             return true;
         }, console.error, function () { return console.log("Positions.fetched"); });
         // this.dataService.getJobPosition();
@@ -1808,6 +1839,8 @@ var RecruiterModule = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Recruiter; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_navigation_auth_auth_model__ = __webpack_require__("./src/app/core/navigation/auth/auth.model.ts");
+
 /**
  * Created on: April 22, 2018
  * Model a recruiter
@@ -1815,6 +1848,13 @@ var RecruiterModule = /** @class */ (function () {
  */
 var Recruiter = /** @class */ (function () {
     function Recruiter() {
+        this.user = new __WEBPACK_IMPORTED_MODULE_0__core_navigation_auth_auth_model__["a" /* AuthModel */]();
+        this.address = "";
+        this.contact = '';
+        this.email = '';
+        this.webLink = '';
+        //  this.logoURL='';
+        this.positions = [];
     }
     return Recruiter;
 }());
@@ -1845,6 +1885,7 @@ module.exports = "<form (ngSubmit)=\"onSubmit()\" #f=\"ngForm\" class=\"form-con
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__core_services_data_service__ = __webpack_require__("./src/app/core/services/data.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_auth_service__ = __webpack_require__("./src/app/auth/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1857,10 +1898,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UpdateRecruiterComponent = /** @class */ (function () {
-    function UpdateRecruiterComponent(_dataService, _authService) {
+    function UpdateRecruiterComponent(_dataService, _authService, router) {
         this._dataService = _dataService;
         this._authService = _authService;
+        this.router = router;
         this.selectedFile = null;
         this.fullImagePath = "/assets/images/profile.png";
     }
@@ -1882,6 +1925,7 @@ var UpdateRecruiterComponent = /** @class */ (function () {
         };
         // this._dataService.createRecruiter(body);
         this._dataService.updateRecruiter(body);
+        this.router.navigateByUrl('/jms/recruiter');
     };
     UpdateRecruiterComponent.prototype.getImage = function (event) {
         console.log(event);
@@ -1893,7 +1937,8 @@ var UpdateRecruiterComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/recruiter/update-recruiter/update-recruiter.component.html"),
             styles: [__webpack_require__("./src/app/recruiter/update-recruiter/update-recruiter.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__core_services_data_service__["a" /* DataService */], __WEBPACK_IMPORTED_MODULE_2__auth_auth_service__["a" /* AuthService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__core_services_data_service__["a" /* DataService */], __WEBPACK_IMPORTED_MODULE_2__auth_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* Router */]])
     ], UpdateRecruiterComponent);
     return UpdateRecruiterComponent;
 }());
