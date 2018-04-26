@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../../core/services/data.service';
 import {AuthService} from  '../../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jmsapp-update-recruiter',
@@ -18,7 +19,8 @@ export class UpdateRecruiterComponent implements OnInit {
   fullImagePath:string;
 
   selectedFile:File = null;
-  constructor(private _dataService: DataService,private _authService: AuthService) { 
+  constructor(private _dataService: DataService,private _authService: AuthService,
+  private router: Router) { 
     this.fullImagePath = "/assets/images/profile.png";
   }
   
@@ -30,22 +32,24 @@ export class UpdateRecruiterComponent implements OnInit {
   onSubmit(){
     // const fd = new FormData();
     // fd.append('image',this.selectedFile,this.selectedFile.name); 
-    console.log(this.jwtInfo.role);
+
+    // console.log(this.jwtInfo.role);
     let body = {
-      recruiter_id:this.jwtInfo._id,
-      name: this.name,
+      // name: this.name,
       address: this.address,
       contact: this.contact,
       webLink: this.userWebLink,
       email: this.email,
-      logoURL:""
+      logoURL:"https://www.pexels.com/photo/nature-red-love-romantic-67636/"
     };
     // this._dataService.createRecruiter(body);
     this._dataService.updateRecruiter(body);
+    this.router.navigateByUrl('/jms/recruiter');
   }
   
   getImage(event){
-    // console.log(event);
+    console.log(event);
+    
     // this.selectedFile = event.target.files[0];
   }
 }

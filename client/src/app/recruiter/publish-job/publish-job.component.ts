@@ -13,20 +13,21 @@ export class PublishJobComponent implements OnInit {
   @Input() title;
   @Input() description;
   @Input() tags;
-  constructor(private dataService: DataService,private router:Router) { }
+  constructor(private _dataService: DataService,private router:Router) { }
 
   ngOnInit() {
   }
 
   createNewJob(){
     let newJob:JobPosition ={
+      company:"",
       title: this.title,
       description: this.description,
       tags: this.tags,
       status:'Open',
       postDate: new Date()
     };
-    this.dataService.createNewJob(newJob);
+    this._dataService.createNewJob(newJob);
   }
   
   onSubmit(){

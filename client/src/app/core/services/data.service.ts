@@ -207,7 +207,7 @@ export class DataService {
   }
 
   createNewJob(newJob) {
-    let jsonBody = { id: name, newJob: newJob };
+    let jsonBody = {newJob: newJob};
     let body = JSON.stringify(jsonBody);
     return this._http.post(url + "/jobPosition/create", body, httpOptions)
       .subscribe(
@@ -218,6 +218,7 @@ export class DataService {
   }
 
   getRecruiterInfo() {
+    console.log('Inside Service');
     const token = localStorage.getItem('jwt');
     if (token) {
       const options = {
@@ -225,8 +226,8 @@ export class DataService {
       };
 
       this._http.get(`${url}/recruiter/info`, options)
-        .subscribe((response: Recruiter) => {
-          console.log(response);
+        .subscribe((response : Recruiter) => {
+          console.log("My response",response);
           this.dataRepo.recruiter = response;
           this._recruiter.next(Object.assign({}, this.dataRepo).recruiter);
         }, console.error, () => console.log('get recruiter info done'));

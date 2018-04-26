@@ -1,11 +1,11 @@
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
+    <img class="card-img-top" src="/assets/images/profile.png" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{applicant.name}}</h5>
       <p class="card-text">{{applicant.email}}</p>
       <p class="card-text">{{applicant.dob}}</p>
-      <p class="card-text">{{applicant.address}}</p>
+      <p class="card-text">{{applicant.address.line1}}</p>
       <p class="card-text">{{applicant.liURL}}</p>
-      <a href="#" class="btn btn-primary" (click)="onUpdate()">Update</a>
+      <a class="btn btn-primary" (click)="onUpdate()">Update</a>
     </div>
   </div>
