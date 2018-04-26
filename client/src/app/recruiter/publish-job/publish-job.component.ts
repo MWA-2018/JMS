@@ -19,7 +19,8 @@ export class PublishJobComponent implements OnInit {
   }
 
   createNewJob(){
-    let newJob:JobPosition ={
+    let newJob:JobPosition ={,
+      company:"",
       title: this.title,
       description: this.description,
       tags: this.tags,

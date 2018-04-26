@@ -44,6 +44,7 @@ export class UpdateRecruiterComponent implements OnInit {
     };
     // this._dataService.createRecruiter(body);
     this._dataService.updateRecruiter(body);
+    this.router.navigateByUrl('/jms/recruiter');
   }
   
   getImage(event){
