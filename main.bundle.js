@@ -273,7 +273,7 @@ module.exports = ""
 /***/ "./src/app/applicant/applicant.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-body row\">\n  <div class=\"col-md-4\">\n    <div *ngIf=\"!(applicant == null)\">\n      <jmsapp-applicant-info [applicant]=\"applicant\"></jmsapp-applicant-info>\n    </div>\n\n  </div>\n  <div class=\"col-md-8\">\n    <!-- <div *ngIf=\"!(positions == null)\"> -->\n    <tabset>\n      <tab heading=\"Job Applied\">\n        <jmsapp-position [positions]=\"positions\"></jmsapp-position>\n      </tab>\n      <tab heading=\"Job Available\">\n        <jmsapp-search></jmsapp-search>\n      </tab>\n    </tabset>\n\n    <!-- </div> -->\n  </div>\n  <!-- <jmsapp-update-applicant-info></jmsapp-update-applicant-info> -->\n</div>"
+module.exports = "<div class=\"modal-body row\">\n  <div class=\"col-md-4\">\n    <div *ngIf=\"!(applicant == null)\">\n      <jmsapp-applicant-info [applicant]=\"applicant\"></jmsapp-applicant-info>\n    </div>\n\n  </div>\n  <div class=\"col-md-8\">\n    <!-- <div *ngIf=\"!(positions == null)\"> -->\n    <tabset>\n      <tab heading=\"Job Applied\">\n        <jmsapp-position [positions]=\"positions\"></jmsapp-position>\n      </tab>\n    </tabset>\n\n    <!-- </div> -->\n  </div>\n  <!-- <jmsapp-update-applicant-info></jmsapp-update-applicant-info> -->\n</div>"
 
 /***/ }),
 
@@ -307,6 +307,9 @@ var ApplicantComponent = /** @class */ (function () {
         this.positions = [];
         console.log('test');
         this._dataService.setSearchBarMini(true);
+        // this._dataService.appliedJobPos.subscribe((res: JobPosition[]) => {
+        //   this.positions = res;
+        // });
     };
     ApplicantComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -1085,7 +1088,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var httpOptions = {
     headers: new __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["d" /* HttpHeaders */]({ 'Content-Type': 'application/json' })
 };
-var url = "https://jms-qiuzqyaygb.now.sh/api";
+var url = "https://jms-fjykbcylbx.now.sh/api";
 var DataService = /** @class */ (function () {
     function DataService(_http, _authService) {
         this._http = _http;
@@ -1096,6 +1099,7 @@ var DataService = /** @class */ (function () {
             credentials: new __WEBPACK_IMPORTED_MODULE_1__shared_models_credentials__["a" /* Credentials */],
             jobPosition: new Array(),
             jobPosResault: new Array(),
+            appliedJobPos: new Array(),
             recruiter: new __WEBPACK_IMPORTED_MODULE_7__recruiter_recruiter__["a" /* Recruiter */],
             authenticated: false,
             searchBarMini: false,
@@ -1108,6 +1112,8 @@ var DataService = /** @class */ (function () {
         this.jobPosition = this._jobPosition.asObservable();
         this._jobPosResault = new __WEBPACK_IMPORTED_MODULE_5_rxjs_BehaviorSubject__["BehaviorSubject"](new Array());
         this.jobPosResault = this._jobPosResault.asObservable();
+        this._appliedJobPos = new __WEBPACK_IMPORTED_MODULE_5_rxjs_BehaviorSubject__["BehaviorSubject"](new Array());
+        this.appliedJobPos = this._appliedJobPos.asObservable();
         this._recruiter = new __WEBPACK_IMPORTED_MODULE_5_rxjs_BehaviorSubject__["BehaviorSubject"](new __WEBPACK_IMPORTED_MODULE_7__recruiter_recruiter__["a" /* Recruiter */]);
         this.recruiter = this._recruiter.asObservable();
         this._searchBarMini = new __WEBPACK_IMPORTED_MODULE_5_rxjs_BehaviorSubject__["BehaviorSubject"](new Boolean);
@@ -1134,6 +1140,15 @@ var DataService = /** @class */ (function () {
                 _this._applicant.next(Object.assign({}, _this.dataRepo).applicant);
             });
         }
+    };
+    DataService.prototype.getAppliedJobPos = function (pos_id) {
+        var _this = this;
+        this._http.get(url + "/jobPosition/search?_id=" + pos_id)
+            .subscribe(function (response) {
+            console.log(response);
+            _this.dataRepo.appliedJobPos = response;
+            _this._appliedJobPos.next(Object.assign({}, _this.dataRepo).appliedJobPos);
+        });
     };
     DataService.prototype.isAuthenticated = function () {
         return !!this.token;
@@ -2208,6 +2223,7 @@ var SearchComponent = /** @class */ (function () {
         console.log(pos_id);
         var resault = this._dataService.updateApplicantJobPos(pos_id);
         console.log(resault);
+        this._dataService.getAppliedJobPos(pos_id);
         this._router.navigate(['jms/applicant']);
     };
     SearchComponent.prototype.updateFilter = function (event) {
