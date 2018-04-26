@@ -1085,7 +1085,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var httpOptions = {
     headers: new __WEBPACK_IMPORTED_MODULE_6__angular_common_http__["d" /* HttpHeaders */]({ 'Content-Type': 'application/json' })
 };
-var url = "http://localhost:3000/api";
+var url = "https://jms-qiuzqyaygb.now.sh/api";
 var DataService = /** @class */ (function () {
     function DataService(_http, _authService) {
         this._http = _http;
